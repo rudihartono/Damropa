@@ -115,7 +115,7 @@ public class MainFrame implements MouseListener, MouseMotionListener{
         reader.read();
         rawData = reader.get_data();
         FilterDamropa filter = new FilterDamropa();
-        filter.setParameter(0.17,0.4012,0.0215);
+        filter.setParameter(0.2,0.5050,0.0115);
         filter.setLength(150);
         filter.setRawdata(rawData);
 
