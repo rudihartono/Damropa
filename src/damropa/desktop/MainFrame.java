@@ -48,6 +48,8 @@ public class MainFrame implements MouseListener, MouseMotionListener{
     private int fileIndex;
 
     private ArrayList<RoadAnomalyDamropa> roadDetections;
+    ArrayList<RoadAnomalyDamropa> roadDetected;
+    private Coordinate center;
     private ArrayList<File> file;
     private File fileImage;
     private JButton processButton;
@@ -61,20 +63,25 @@ public class MainFrame implements MouseListener, MouseMotionListener{
         initComponent();
     }
 
-    public BufferedImage generateGoogleStaticMap(int width, int height, int zoom, Coordinate center){
+    public BufferedImage generateGoogleStaticMap(int width, int height, int zoom, Coordinate center, int coordinate[]){
         try{
             GoogleStaticMapsUrlGenerator generator = new GoogleStaticMapsUrlGenerator();
             generator.setDimentations(width, height);
             generator.setZoomLevel((short) zoom);
             generator.setCenter(center);
-            Marker start = new Marker(center);
-            start.setColor(google.staticmap.Color.RED);
-            start.setLabel('A');
-            start.setSize(MarkerSize.MID);
 
-            generator.addMarker(start);
 
-            generator.setMapType(MapType.ROADMAP);
+            if(coordinate.length > 0){
+                for(int i=0;i<coordinate.length;i++){
+                    Marker start = new Marker(roadDetected.get(i).getLocation());
+                    start.setColor(google.staticmap.Color.RED);
+                    //start.setLabel('A');
+                    start.setSize(MarkerSize.MID);
+                    generator.addMarker(start);
+                }
+            }
+
+            generator.setMapType(MapType.SATELLITE);
 
             BufferedImage image  = ImageIO.read(generator.generateURL());
 
@@ -129,7 +136,7 @@ public class MainFrame implements MouseListener, MouseMotionListener{
 
         //fase label
         filter.toRoadAnomali(filter.getFilteredData());
-        ArrayList<RoadAnomalyDamropa> roadDetected = filter.getFinalData();
+        roadDetected = filter.getFinalData();
         String[] locationList = new String[roadDetected.size()];
 
         for(int i=0;i<locationList.length;i++){
@@ -141,7 +148,7 @@ public class MainFrame implements MouseListener, MouseMotionListener{
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                listPanel.setDamropaList();
+                listPanel.update();
                 listPanel.updateUI();
             }
         });
@@ -259,12 +266,13 @@ public class MainFrame implements MouseListener, MouseMotionListener{
                 reader.read();
 
                 int dataTengah = reader.getSize()/2;
+                int a[] = new int[0];
 
-                Coordinate center = new Coordinate(reader.get_data().get(dataTengah).get_lat(), reader.get_data().get(dataTengah).get_lng());
-                BufferedImage bi = generateGoogleStaticMap(760,500,18,center);
+                center = new Coordinate(reader.get_data().get(dataTengah).get_lat(), reader.get_data().get(dataTengah).get_lng());
+                BufferedImage bi = generateGoogleStaticMap(760,500,18,center,a);
 
                 if(bi != null){
-                    damageRoadLabel = new JLabel(new ImageIcon(generateGoogleStaticMap(760,500,17,center)));
+                    damageRoadLabel = new JLabel(new ImageIcon(generateGoogleStaticMap(760,500,17,center,a)));
                     damageRoadLabel.setBounds(0,0,760, 500);
                 }else{
                     damageRoadLabel = new JLabel(this.status);
@@ -305,22 +313,21 @@ public class MainFrame implements MouseListener, MouseMotionListener{
 
         }else if(e.getSource() == listPanel.getButton()){
             int selected[] = listPanel.getList().getSelectedIndices();
-
-            System.out.println(listPanel.getList().getSelectedValuesList().size());
-            System.out.println(listPanel.getList().getModel().getElementAt(0));
-
-            System.out.println("total terseleksi " + listPanel.getList().getSelectedIndices()[0]);
-
-            System.out.println(listPanel.getList().getModel().getSize());
-
-            System.out.println("Selected Elements: ");
-
             for(int i=0;i<selected.length;i++){
-
                 String element = listPanel.getList().getModel().getElementAt(selected[i]).toString();
                 System.out.println(listPanel.getList().getModel().getElementAt(i));
-                System.out.println(" "+ element);
             }
+
+            final BufferedImage image = generateGoogleStaticMap(760, 500, 15, center, selected);
+            final int tabIndex = tabPanel.getSelectedIndex();
+            damageRoadLabel = new JLabel(new ImageIcon(image));
+            tabPanel.setTabComponentAt(tabIndex,damageRoadLabel);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    tabPanel.updateUI();
+                }
+            });
         }
         else if(e.getSource() == md.fileMenu.getItem(0)){
             tabPanel.removeAll();

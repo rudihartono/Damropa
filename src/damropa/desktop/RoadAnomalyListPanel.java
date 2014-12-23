@@ -16,7 +16,7 @@ public class RoadAnomalyListPanel extends JPanel{
 
     public RoadAnomalyListPanel(){
         this.setLayout(new BorderLayout());
-        list = new JList(label);
+        list = new JList(data.listModel);
         pane = new JScrollPane(list);
         button = new JButton("Lihat");
         add(pane, BorderLayout.CENTER);
@@ -25,7 +25,7 @@ public class RoadAnomalyListPanel extends JPanel{
 
     public void setDamropaList(){
         //this.list = new JList(data.listModel);
-        this.list = new JList(label);
+        //this.list = new JList(label);
     }
 
     public void showListtoDestop(){
@@ -53,8 +53,7 @@ public class RoadAnomalyListPanel extends JPanel{
     }
 
     public void update(){
-        //label = label;
-       //data.update(label);
+       data.update(label);
     }
 
     public JButton getButton(){
