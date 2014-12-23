@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Damropa:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Damropa_jar</output-path>
+    <root id="archive" name="Damropa.jar">
+      <element id="module-output" name="Damropa" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/slf4j-api-1.7.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/slf4j-jdk14-1.7.7.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$/resources" />
+      <element id="file-copy" path="$PROJECT_DIR$/resources/defaultImage.png" />
+    </root>
+  </artifact>
+</component>

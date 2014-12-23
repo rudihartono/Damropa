@@ -1,6 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="DamropaDestop">
+  <artifact type="jar" build-on-make="true" name="DamropaDestop">
     <output-path>$PROJECT_DIR$/out/artifacts/DamropaDestop</output-path>
-    <root id="archive" name="DamropaDestop.jar" />
+    <root id="archive" name="DamropaDestop.jar">
+      <element id="module-output" name="Damropa" />
+      <element id="artifact" artifact-name="Damropa:jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/resources/defaultImage.png" />
+    </root>
   </artifact>
 </component>
