@@ -13,6 +13,10 @@ public class RawDataDamropa {
     private double heading;
     private double speed;
     private String date;
+    private Coordinate center;
+    private Coordinate from;
+    private Coordinate to;
+
 
     public RawDataDamropa(){
 
@@ -75,7 +79,18 @@ public class RawDataDamropa {
     public String get_date(){
         return this.date;
     }
-
+    public Coordinate getFrom(){
+        return from;
+    }
+    public Coordinate getTo(){
+        return to;
+    }
+    public void setCoordinateFrom(Coordinate from){
+        this.from = from;
+    }
+    public void setCoordinateTo(Coordinate to){
+        this.to = to;
+    }
     public Coordinate getPosition(){
         return new Coordinate(this.lat, this.lng);
     }

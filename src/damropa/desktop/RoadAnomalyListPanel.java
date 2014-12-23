@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
  */
 public class RoadAnomalyListPanel extends JPanel{
     private String label[] = {""};
+    private DataList data = new DataList();
     private JList list;
     private JScrollPane pane;
     private JButton button;
@@ -23,6 +24,7 @@ public class RoadAnomalyListPanel extends JPanel{
     }
 
     public void setDamropaList(){
+        //this.list = new JList(data.listModel);
         this.list = new JList(label);
     }
 
@@ -46,10 +48,13 @@ public class RoadAnomalyListPanel extends JPanel{
         this.label = label;
     }
     public String[] getLabel(){
+        DefaultListModel dataList = new DefaultListModel();
         return label;
     }
+
     public void update(){
-        this.updateUI();
+        //label = label;
+       //data.update(label);
     }
 
     public JButton getButton(){
@@ -57,5 +62,16 @@ public class RoadAnomalyListPanel extends JPanel{
     }
     public JList getList(){
         return this.list;
+    }
+
+    private class DataList{
+        private final DefaultListModel listModel = new DefaultListModel();
+
+        public void update(String[] stringModel){
+            listModel.clear();
+            for(int i=0;i<stringModel.length;i++){
+                listModel.addElement((i+1) + ". "+ stringModel[i]);
+            }
+        }
     }
 }
