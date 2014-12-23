@@ -5,7 +5,7 @@ Damropa (Damages Roads Partrol) merupakan aplikasi desktop berbasis java untuk m
 
 Requirement
 ===========
-Java 1.8
+Java 1.5
 
 
 Cara Build
