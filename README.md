@@ -23,6 +23,8 @@ pada menu filter tandai tz, tx, dan ts
 kemudian seleksi lokasi yang berhasil terdeteksi, dan klik lihat, tunggu hingga muncul marker pada pete.
 
 output akan disimpan di .......
+untuk saat ini output belum tersimpan
+rencananya output akan tersimpan dalam bentuk gambar dan csv(text)
  
 
 
