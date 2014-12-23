@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.BorderUIResource;
+import javax.swing.plaf.TabbedPaneUI;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
@@ -318,14 +319,16 @@ public class MainFrame implements MouseListener, MouseMotionListener{
                 System.out.println(listPanel.getList().getModel().getElementAt(i));
             }
 
-            final BufferedImage image = generateGoogleStaticMap(760, 500, 15, center, selected);
+            final BufferedImage image = generateGoogleStaticMap(760, 500, 17, center, selected);
             final int tabIndex = tabPanel.getSelectedIndex();
             damageRoadLabel = new JLabel(new ImageIcon(image));
-            tabPanel.setTabComponentAt(tabIndex,damageRoadLabel);
+            //tabPanel.setTabComponentAt(tabIndex,damageRoadLabel);
+            tabPanel.setComponentAt(tabIndex, damageRoadLabel);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    tabPanel.updateUI();
+                    tabPanel.setUI(new WindowsTabbedPaneUI());
+                    //tabPanel.updateUI();
                 }
             });
         }
